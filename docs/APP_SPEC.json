@@ -1,0 +1,36 @@
+{
+  "name": "Signalcrest Beacon",
+  "purpose": "Marketing landing page for the Beacon SaaS product: hero section, features, pricing tiers, FAQ, and an email signup form that stores leads.",
+  "actors": [
+    "Visitor (anonymous; browses the landing page and can submit an email lead)",
+    "Operator (owns the site; reviews captured leads)"
+  ],
+  "entities": [
+    {
+      "name": "Lead",
+      "relationships": [
+        "has one email (validated, unique, case-insensitive)",
+        "may record an optional name",
+        "records source = landing page signup",
+        "has created_at/updated_at timestamps"
+      ]
+    }
+  ],
+  "workflows": [
+    {
+      "name": "View landing page",
+      "description": "Anonymous visitor loads the public root and sees hero, features, pricing tiers, and FAQ sections."
+    },
+    {
+      "name": "Sign up with email",
+      "description": "Visitor submits an email and optional name in the signup form; a Lead is stored and a success state is shown."
+    },
+    {
+      "name": "Review leads",
+      "description": "Operator views captured leads in a simple admin index."
+    }
+  ],
+  "modules": [],
+  "integrations": [],
+  "seed_demo": "Landing page content only: three pricing tiers (Starter, Pro, Enterprise) with prices and feature lists, six features, six FAQ entries. No fake leads seeded."
+}
