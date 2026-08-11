@@ -14,7 +14,8 @@ class LeadsController < ApplicationController
   end
 
   def index
-    head :not_found unless current_user&.admin?
+    return head(:not_found) unless current_user&.admin?
+
     @leads = Lead.order(created_at: :desc).limit(200)
   end
 
