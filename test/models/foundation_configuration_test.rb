@@ -37,7 +37,7 @@ class FoundationConfigurationTest < ActiveSupport::TestCase
   test "foundation config template defaults" do
     foundation = Rails.configuration.x.foundation
 
-    assert_equal "Application", foundation[:application_name]
+    assert_equal "Signalcrest Beacon", foundation[:application_name]
     assert_match(/\A#\h{6}\z/, foundation[:brand_seed_color])
     assert_equal 90, foundation[:healthcheck_disk_usage_percent_max]
     assert_equal 90, foundation[:healthcheck_memory_usage_percent_max]
