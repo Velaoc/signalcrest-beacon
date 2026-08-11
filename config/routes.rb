@@ -130,6 +130,12 @@ Rails.application.routes.draw do
     get "session", to: "sessions#show", as: :session
   end
 
+  # Landing page lead capture: public create, operator-only lead inbox.
+  # The inbox route sits outside the madmin scope; LeadsController repeats
+  # User#admin? authorization so it fails closed on its own.
+  resources :leads, only: %i[create]
+  get "admin/leads", to: "leads#index", as: :admin_leads
+
   # Minimal landing page until the M7 marketing set replaces it.
     root "foundation/home#show"
 end
