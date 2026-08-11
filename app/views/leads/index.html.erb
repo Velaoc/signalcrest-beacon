@@ -1,0 +1,33 @@
+<% title "Leads — Signalcrest Beacon" %>
+
+<div class="md-content">
+  <h1>Leads</h1>
+  <p class="md-section__eyebrow"><%= @leads.size %> total shown, newest first</p>
+
+  <div class="md-list">
+    <% if @leads.empty? %>
+      <p style="padding: 24px;">No leads yet. The waitlist form on the landing page saves them here.</p>
+    <% else %>
+      <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+          <tr style="text-align: left; color: var(--md-sys-color-on-surface-variant);">
+            <th style="padding: 12px 16px;">Name</th>
+            <th style="padding: 12px 16px;">Email</th>
+            <th style="padding: 12px 16px;">Signed up</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @leads.each do |lead| %>
+            <tr style="border-top: 1px solid var(--md-sys-color-outline-variant);">
+              <td style="padding: 12px 16px;"><%= lead.name.presence || "—" %></td>
+              <td style="padding: 12px 16px;"><%= mail_to lead.email %></td>
+              <td style="padding: 12px 16px; color: var(--md-sys-color-on-surface-variant);"><%= l lead.created_at, format: :long %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  </div>
+
+  <%= link_to "Back to landing page", root_path, class: "md-button md-button--outlined", style: "margin-top: 24px;" %>
+</div>
