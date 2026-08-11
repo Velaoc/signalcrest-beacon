@@ -50,9 +50,9 @@
     <p class="md-section__eyebrow">What Beacon does</p>
     <h2 id="features-title" class="md-section__heading">Everything noisy, distilled into signal.</h2>
     <div class="md-grid">
-      <% features.each do |feature| %>
+      <% features.each_with_index do |feature, index| %>
         <article class="md-card md-card--filled md-feature">
-          <span class="md-feature__number" aria-hidden="true"><%= material_symbol(feature[:icon], size: 32) %></span>
+          <span class="md-feature__number beacon-feature__number" aria-hidden="true"><%= format("%02d", index + 1) %></span>
           <div>
             <h3><%= feature[:title] %></h3>
             <p><%= feature[:body] %></p>
