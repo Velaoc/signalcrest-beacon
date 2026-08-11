@@ -136,6 +136,6 @@ Rails.application.routes.draw do
   resources :leads, only: %i[create]
   get "admin/leads", to: "leads#index", as: :admin_leads
 
-  # Minimal landing page until the M7 marketing set replaces it.
-    root "foundation/home#show"
+  # Marketing landing page (hero, features, pricing, FAQ, waitlist lead capture).
+  root "foundation/home#show"
 end
