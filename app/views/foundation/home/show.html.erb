@@ -1,118 +1,130 @@
 <% identity = Rails.configuration.x.foundation %>
-<% title identity[:default_page_title] %>
+<% title "Beacon — Your team's signal, all in one place" %>
 
-<section class="md-hero" aria-labelledby="hero-title">
+<% faqs = [
+  { q: "What exactly is Beacon?", a: "Beacon is a lightweight operations hub for product teams: it collects status, alerts, and context from the tools you already use and puts them in one timeline your whole team can see." },
+  { q: "Which tools does Beacon connect to?", a: "Beacon starts with GitHub, Slack, and email digests, with more connectors shipping through the year. If your stack isn't covered yet, tell us — the roadmap is driven by the waitlist." },
+  { q: "How long does setup take?", a: "Most teams go from signup to a live timeline in under ten minutes. There are no agents to train and no rules engine to configure; Beacon learns the shape of your traffic on its own." },
+  { q: "Is my data secure?", a: "Yes. Data is encrypted in transit and at rest, access is scoped to your workspace, and we never sell or share your data. Full SOC 2 report is available to Enterprise customers." },
+  { q: "Can I cancel anytime?", a: "Yes. Every paid plan is month-to-month with no lock-in; downgrade or cancel in two clicks from your workspace settings." },
+  { q: "Do you offer a free trial?", a: "Beacon is in private beta right now — join the waitlist with your email below and you'll get early access with a free Pro trial when your spot opens." }
+] %>
+
+<% features = [
+  { icon: :bolt, title: "One signal, from every source", body: "Status pages, CI runs, deploys, alerts, and customer reports collapse into a single timeline. No more tab-hopping to find out what actually changed." },
+  { icon: :notifications_active, title: "Alerts that tell you what matters", body: "Beacon learns your team's normal traffic and surfaces anomalies first, so the page that's down outranks the routine deploy." },
+  { icon: :groups, title: "Built for the whole team", body: "Everyone sees the same picture in real time, from the engineer on call to the PM reading the morning digest. No more hallway updates." },
+  { icon: :lock, title: "Security as the default", body: "Encrypted in transit and at rest, scoped workspace access, and no data ever sold. SOC 2 report on request for Enterprise." },
+  { icon: :widgets, title: "Integrations that grow with you", body: "GitHub, Slack, and email today; more connectors landing through the year. Each one plugs in with OAuth, not credentials in a config file." },
+  { icon: :trending_up, title: "A record you can learn from", body: "Every incident, change, and notification is archived and searchable — a running history that turns post-mortems from guesswork into evidence." }
+] %>
+
+<% tiers = [
+  { name: "Starter", price: "Free", blurb: "For individuals and side projects finding their signal.", bullets: ["1 workspace", "3 team members", "1,000 events / month", "7-day history", "Community support"], featured: false, cta: "Get started" },
+  { name: "Pro", price: "$29", blurb: "For teams shipping a growing product.", bullets: ["Unlimited workspaces", "25 team members", "100,000 events / month", "90-day history", "GitHub + Slack integrations", "Priority support"], featured: true, cta: "Join the waitlist" },
+  { name: "Enterprise", price: "Custom", blurb: "For organizations that need advanced controls.", bullets: ["Unlimited team members", "Unlimited events", "SSO / SAML", "Audit log", "SOC 2 report", "Dedicated support"], featured: false, cta: "Contact sales" }
+] %>
+
+<!-- Hero -->
+<section class="md-hero beacon-hero" aria-labelledby="hero-title">
   <div class="md-hero__inner">
-    <div>
+    <div class="beacon-hero__copy">
       <p class="md-section__eyebrow"><%= identity[:application_name] %></p>
-      <h1 id="hero-title">Accounts, workspaces, and billing — ready to extend.</h1>
-      <p><%= identity[:default_page_description] %> Authentication, organizations, plans, and a Material Design 3 shell ship as the core. Optional modules are present only when this build includes them.</p>
+      <h1 id="hero-title">Your team's signal, all in one place.</h1>
+      <p class="beacon-hero__lede">Beacon pulls status, alerts, and context from the tools you already use into a single live timeline — so the whole team sees what matters, the moment it matters.</p>
       <div class="md-actions">
-        <% if user_signed_in? %>
-          <%= link_to "Open your workspace", organizations.organizations_path, class: "md-button md-button--filled" %>
-          <%= link_to "Manage billing", billing_path, class: "md-button md-button--outlined" %>
-        <% else %>
-          <%= link_to "Create an account", new_user_registration_path, class: "md-button md-button--filled" %>
-          <%= link_to "View plans", pricing_path, class: "md-button md-button--outlined" %>
-        <% end %>
+        <a href="#waitlist" class="md-button md-button--filled">Join the waitlist</a>
+        <a href="#features" class="md-button md-button--outlined">See what it does</a>
       </div>
+      <p class="beacon-hero__note">Private beta — no credit card. Free Pro trial when your spot opens.</p>
     </div>
-    <div class="md-hero__art" aria-hidden="true"><div class="md-hero__orb"></div></div>
+    <div class="md-hero__art" aria-hidden="true">
+      <div class="md-hero__orb beacon-orb"></div>
+    </div>
   </div>
 </section>
 
-<section class="md-section" aria-labelledby="capabilities-title">
+<!-- Features -->
+<section id="features" class="md-section" aria-labelledby="features-title">
   <div class="md-section__inner">
-    <p class="md-section__eyebrow">In this build</p>
-    <h2 id="capabilities-title" class="md-section__heading">What ships with every application on this foundation.</h2>
+    <p class="md-section__eyebrow">What Beacon does</p>
+    <h2 id="features-title" class="md-section__heading">Everything noisy, distilled into signal.</h2>
     <div class="md-grid">
-      <article class="md-card md-card--filled md-feature" data-capability="accounts">
-        <span class="md-feature__number" aria-hidden="true"><%= material_symbol(:person, size: 32) %></span>
-        <div>
-          <h3>Accounts and sign-in</h3>
-          <p>Email confirmation, lockout, OAuth linking without auto-merge, and step-up reauthentication before sensitive changes. Review and revoke your own devices from settings.</p>
-        </div>
-      </article>
-      <article class="md-card md-card--filled md-feature" data-capability="organizations">
-        <span class="md-feature__number" aria-hidden="true"><%= material_symbol(:workspaces, size: 32) %></span>
-        <div>
-          <h3>Organizations and roles</h3>
-          <p>Personal and shared workspaces with owner, admin, and member roles. Invitations use signed, expiring tokens; ownership transfer and leaving stay last-owner safe.</p>
-        </div>
-      </article>
-      <article class="md-card md-card--filled md-feature" data-capability="billing">
-        <span class="md-feature__number" aria-hidden="true"><%= material_symbol(:payments, size: 32) %></span>
-        <div>
-          <h3>Plans and billing</h3>
-          <p>Free, Pro, and Enterprise example tiers with Stripe Checkout, a customer portal, and manual plan assignment that takes precedence when operators need it.</p>
-        </div>
-      </article>
-      <article class="md-card md-card--filled md-feature" data-capability="design">
-        <span class="md-feature__number" aria-hidden="true"><%= material_symbol(:light_mode, size: 32) %></span>
-        <div>
-          <h3>Material Design 3</h3>
-          <p>Light and dark tokens from one brand seed, adaptive navigation, and a local Material Symbols subset — no icon CDN and no Node build in production.</p>
-        </div>
-      </article>
-      <article class="md-card md-card--filled md-feature" data-capability="security">
-        <span class="md-feature__number" aria-hidden="true"><%= material_symbol(:task_alt, size: 32) %></span>
-        <div>
-          <h3>Hardened defaults</h3>
-          <p>Host-header protection from the configured domain, branded transactional mail with inlined styles, confirmation resend that does not leak addresses, and health probes for database, queue, storage, and host headroom.</p>
-        </div>
-      </article>
-      <article class="md-card md-card--filled md-feature" data-capability="native">
-        <span class="md-feature__number" aria-hidden="true"><%= material_symbol(:open_in_new, size: 32) %></span>
-        <div>
-          <h3>Native shell contract</h3>
-          <p>Versioned path configuration, deep-link association documents, and native entry and auth handoff for a Hotwire Native shell — ordinary browsers never receive those routes.</p>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<section class="md-section md-section--tonal" aria-labelledby="plans-title">
-  <div class="md-section__inner">
-    <p class="md-section__eyebrow">Simple plans</p>
-    <h2 id="plans-title" class="md-section__heading">Start with what fits today.</h2>
-    <div class="md-pricing-grid">
-      <% PricingPlans.plans.each do |plan| %>
-        <% cents = plan.metadata.dig(:prices, :month) %>
-        <article class="md-card <%= plan.highlighted? ? "md-card--elevated" : "md-card--outlined" %> md-price-card">
-          <% if plan.highlighted? %><span class="md-chip selected">Recommended</span><% end %>
-          <h3><%= plan.name %></h3>
-          <p><%= plan.description %></p>
-          <p class="md-price-card__price"><%= cents.zero? ? "Free" : number_to_currency(cents / 100.0, precision: 0) %><%= "/month" unless cents.zero? %></p>
-          <ul><% plan.bullets.first(3).each do |bullet| %><li><%= bullet %></li><% end %></ul>
-          <%= link_to "View #{plan.name}", pricing_path, class: "md-button #{plan.highlighted? ? "md-button--filled" : "md-button--outlined"}" %>
+      <% features.each do |feature| %>
+        <article class="md-card md-card--filled md-feature">
+          <span class="md-feature__number" aria-hidden="true"><%= material_symbol(feature[:icon], size: 32) %></span>
+          <div>
+            <h3><%= feature[:title] %></h3>
+            <p><%= feature[:body] %></p>
+          </div>
         </article>
       <% end %>
     </div>
   </div>
 </section>
 
-<section class="md-section" aria-labelledby="faq-title">
+<!-- Pricing -->
+<section id="pricing" class="md-section md-section--tonal" aria-labelledby="pricing-title">
+  <div class="md-section__inner">
+    <p class="md-section__eyebrow">Simple plans</p>
+    <h2 id="pricing-title" class="md-section__heading">Pricing that scales with your team.</h2>
+    <div class="md-pricing-grid">
+      <% tiers.each do |tier| %>
+        <article class="md-card <%= tier[:featured] ? "md-card--elevated" : "md-card--outlined" %> md-price-card">
+          <% if tier[:featured] %><span class="md-chip selected">Recommended</span><% end %>
+          <h3><%= tier[:name] %></h3>
+          <p><%= tier[:blurb] %></p>
+          <p class="md-price-card__price"><%= tier[:price] %><%= "/month" unless tier[:price] == "Free" || tier[:price] == "Custom" %></p>
+          <ul>
+            <% tier[:bullets].each do |bullet| %><li><%= bullet %></li><% end %>
+          </ul>
+          <a href="#waitlist" class="md-button <%= tier[:featured] ? "md-button--filled" : "md-button--outlined" %>"><%= tier[:cta] %></a>
+        </article>
+      <% end %>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="md-section" aria-labelledby="faq-title">
   <div class="md-section__inner">
     <p class="md-section__eyebrow">Questions, answered</p>
-    <h2 id="faq-title" class="md-section__heading">A straightforward place to begin.</h2>
+    <h2 id="faq-title" class="md-section__heading">Before you ask — we've got you.</h2>
     <div class="md-faq">
-      <details>
-        <summary>Can I begin on the free plan?</summary>
-        <p>Yes. Create an account and move to another plan when your organization needs more. Billing changes that touch payment methods require a fresh identity confirmation.</p>
-      </details>
-      <details>
-        <summary>Can teammates share a workspace?</summary>
-        <p>Yes. Organization owners can invite people and choose owner, admin, or member for each person.</p>
-      </details>
-      <details>
-        <summary>Can I change plans later?</summary>
-        <p>Yes. Eligible organizations can compare plans and manage an active subscription from billing, or contact sales when a plan is not self-serve.</p>
-      </details>
-      <details>
-        <summary>How do I see where I am signed in?</summary>
-        <p>Open Devices in settings to list live sessions, mark the current one, and revoke any session you do not recognize.</p>
-      </details>
+      <% faqs.each do |item| %>
+        <details>
+          <summary><%= item[:q] %></summary>
+          <p><%= item[:a] %></p>
+        </details>
+      <% end %>
     </div>
+  </div>
+</section>
+
+<!-- Waitlist / lead capture -->
+<section id="waitlist" class="md-section beacon-waitlist" aria-labelledby="waitlist-title">
+  <div class="md-section__inner beacon-waitlist__inner">
+    <p class="md-section__eyebrow">Early access</p>
+    <h2 id="waitlist-title" class="md-section__heading">Be first in line for Beacon.</h2>
+    <p class="beacon-waitlist__lede">Leave your email and we'll hold your spot in the private beta — plus a free Pro trial when it opens.</p>
+
+    <% if notice.present? %>
+      <p class="beacon-waitlist__success" role="status"><%= notice %></p>
+    <% elsif alert.present? %>
+      <p class="beacon-waitlist__error" role="alert"><%= alert %></p>
+    <% end %>
+
+    <%= form_with model: Lead.new, url: leads_path, class: "beacon-waitlist__form", html: { novalidate: false } do |form| %>
+      <div class="md-field">
+        <%= form.label :name, "Name (optional)" %>
+        <%= form.text_field :name, autocomplete: "name", maxlength: 100, placeholder: "Ada Lovelace" %>
+      </div>
+      <div class="md-field">
+        <%= form.label :email, "Work email" %>
+        <%= form.email_field :email, required: true, autocomplete: "email", placeholder: "ada@company.com" %>
+      </div>
+      <%= form.submit "Join the waitlist", class: "md-button md-button--filled beacon-waitlist__submit" %>
+    <% end %>
+    <p class="beacon-waitlist__fine">No spam, ever. Unsubscribe anytime.</p>
   </div>
 </section>
